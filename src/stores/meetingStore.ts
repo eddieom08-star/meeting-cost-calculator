@@ -13,6 +13,7 @@ interface MeetingState {
   isRunning: boolean
   isPaused: boolean
   canStart: boolean
+  _hasHydrated: boolean
 }
 
 interface MeetingActions {
@@ -64,6 +65,7 @@ export const useMeetingStore = create<MeetingStore>()(
     (set, get) => ({
       // Initial state
       meeting: createEmptyMeeting(),
+      _hasHydrated: false,
 
       // Computed (derived from state)
       get isRunning() {
@@ -221,6 +223,11 @@ export const useMeetingStore = create<MeetingStore>()(
     {
       name: APP_CONFIG.storageKeys.meeting,
       partialize: (state) => ({ meeting: state.meeting }),
+      onRehydrateStorage: () => (state) => {
+        if (state) {
+          state._hasHydrated = true
+        }
+      },
     }
   )
 )

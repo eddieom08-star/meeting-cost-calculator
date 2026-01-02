@@ -69,6 +69,15 @@ export function calculateElapsedTime(
 }
 
 /**
+ * Calculate burn rate (cost per minute)
+ * @param attendees - List of meeting attendees
+ * @returns Cost in cents per minute
+ */
+export function calculateBurnRate(attendees: Attendee[]): number {
+  return getCostPerMinute(attendees)
+}
+
+/**
  * Determine cost level based on thresholds
  */
 export function getCostLevel(costCents: number): 'low' | 'medium' | 'high' {
