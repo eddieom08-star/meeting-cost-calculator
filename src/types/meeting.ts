@@ -37,6 +37,7 @@ export interface Meeting {
 
 // Meeting summary for completed meetings
 export interface MeetingSummary {
+  id: string
   meetingId: string
   title: string
   totalCost: number // In cents
@@ -44,6 +45,8 @@ export interface MeetingSummary {
   attendeeCount: number
   averageCostPerMinute: number
   completedAt: number
+  endedAt: number // Alias for completedAt for consistency
+  notes?: string
 }
 
 // Role preset configuration

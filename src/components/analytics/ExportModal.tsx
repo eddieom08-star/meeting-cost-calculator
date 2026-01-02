@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useHistoryStore } from '@/stores/historyStore';
-import { exportToCSV, exportToJSON, downloadFile, copyToClipboard, generateFilename } from '@/utils/export';
+import { downloadFile, copyToClipboard } from '@/utils/export';
 import { Card, Button } from '@/components/ui';
 import { cn } from '@/utils/cn';
 
@@ -16,6 +16,27 @@ export const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose }) => 
   const { meetings } = useHistoryStore();
   const [format, setFormat] = useState<ExportFormat>('csv');
   const [copied, setCopied] = useState(false);
+
+  const exportToCSV = (data: typeof meetings): string => {
+    const headers = ['Date', 'Duration (min)', 'Attendees', 'Total Cost', 'Cost/Min'];
+    const rows = data.map(m => [
+      new Date(m.endedAt).toLocaleDateString(),
+      Math.round(m.duration / 60000).toString(),
+      m.attendeeCount.toString(),
+      (m.totalCost / 100).toFixed(2),
+      (m.averageCostPerMinute / 100).toFixed(2),
+    ]);
+    return [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+  };
+
+  const exportToJSON = (data: typeof meetings): string => {
+    return JSON.stringify(data, null, 2);
+  };
+
+  const generateFilename = (prefix: string, extension: string): string => {
+    const timestamp = new Date().toISOString().split('T')[0];
+    return `${prefix}-${timestamp}.${extension}`;
+  };
 
   const handleDownload = () => {
     let content: string;
@@ -39,11 +60,14 @@ export const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose }) => 
 
   const handleCopy = async () => {
     const content = format === 'csv' ? exportToCSV(meetings) : exportToJSON(meetings);
-    const success = await copyToClipboard(content);
+    const text = content;
 
-    if (success) {
+    try {
+      await navigator.clipboard.writeText(text);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Fallback silently fails
     }
   };
 

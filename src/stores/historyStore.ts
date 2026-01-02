@@ -19,7 +19,13 @@ export const useHistoryStore = create<HistoryState>()(
 
       addMeeting: (meeting: MeetingSummary) =>
         set((state) => {
-          const newMeetings = [meeting, ...state.meetings].slice(
+          // Ensure endedAt is set (fallback to completedAt for consistency)
+          const meetingWithEndedAt = {
+            ...meeting,
+            endedAt: meeting.endedAt || meeting.completedAt,
+            id: meeting.id || meeting.meetingId,
+          };
+          const newMeetings = [meetingWithEndedAt, ...state.meetings].slice(
             0,
             APP_CONFIG.maxHistoryItems
           );
