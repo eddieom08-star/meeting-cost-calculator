@@ -19,14 +19,10 @@ import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
 
 function App() {
-  const { meeting, resetMeeting, _hasHydrated: meetingHydrated } = useMeetingStore();
+  const { meeting, resetMeeting } = useMeetingStore();
   const { elapsedTime, currentCost, isActive } = useMeetingTimer();
   const [isPresentationMode, setIsPresentationMode] = useState(false);
   const [showAddForm, setShowAddForm] = useState(false);
-
-  if (!meetingHydrated) {
-    return null;
-  }
 
   // Accessibility announcements
   useAccessibilityAnnouncer(isActive, currentCost, elapsedTime);

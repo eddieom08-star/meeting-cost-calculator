@@ -5,7 +5,6 @@ import type { MeetingSummary } from '@/types';
 
 interface HistoryState {
   meetings: MeetingSummary[];
-  _hasHydrated: boolean;
   addMeeting: (meeting: MeetingSummary) => void;
   clearHistory: () => void;
   totalCost: () => number;
@@ -17,7 +16,6 @@ export const useHistoryStore = create<HistoryState>()(
   persist(
     (set, get) => ({
       meetings: [],
-      _hasHydrated: false,
 
       addMeeting: (meeting: MeetingSummary) =>
         set((state) => {
@@ -57,11 +55,6 @@ export const useHistoryStore = create<HistoryState>()(
     }),
     {
       name: 'meeting-history',
-      onRehydrateStorage: () => (state) => {
-        if (state) {
-          state._hasHydrated = true
-        }
-      },
     }
   )
 );
