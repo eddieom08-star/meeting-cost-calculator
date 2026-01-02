@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useMeetingStore } from '@/stores/meetingStore';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 import { useAccessibilityAnnouncer } from '@/hooks/useAccessibilityAnnouncer';
@@ -19,7 +19,12 @@ import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
 
 function App() {
+  const [isHydrated, setIsHydrated] = useState(false);
   const { meeting, resetMeeting } = useMeetingStore();
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
   const { elapsedTime, currentCost, isActive } = useMeetingTimer();
   const [isPresentationMode, setIsPresentationMode] = useState(false);
   const [showAddForm, setShowAddForm] = useState(false);
@@ -43,6 +48,14 @@ function App() {
 
   const isSetup = meeting.status === 'setup';
   const isCompleted = meeting.status === 'completed';
+
+  if (!isHydrated) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 flex items-center justify-center">
+        <div className="text-slate-400">Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950">
