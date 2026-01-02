@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-cost-low: theme('colors.cost.low');
+    --color-cost-medium: theme('colors.cost.medium');
+    --color-cost-high: theme('colors.cost.high');
+  }
+
+  html {
+    @apply antialiased;
+  }
+
+  body {
+    @apply bg-gray-950 text-gray-100 min-h-screen;
+  }
+}
+
+@layer components {
+  .cost-display {
+    @apply font-mono tabular-nums;
+  }
+
+  .cost-low {
+    @apply text-cost-low;
+  }
+
+  .cost-medium {
+    @apply text-cost-medium;
+  }
+
+  .cost-high {
+    @apply text-cost-high;
+  }
+
+  .glass-panel {
+    @apply bg-gray-900/80 backdrop-blur-sm border border-gray-800 rounded-xl;
+  }
+
+  .btn-primary {
+    @apply bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-secondary {
+    @apply bg-gray-800 hover:bg-gray-700 text-gray-100 font-medium py-2 px-4 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-danger {
+    @apply bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .input-field {
+    @apply w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200;
+  }
+}
+
+@layer utilities {
+  .animate-digit-change {
+    animation: countUp 0.3s ease-out;
+  }
+}
