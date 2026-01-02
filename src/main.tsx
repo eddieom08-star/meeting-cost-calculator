@@ -11,9 +11,7 @@ if (!rootElement) {
 }
 
 createRoot(rootElement).render(
-  <StrictMode>
-    <ErrorBoundary>
-      <App />
-    </ErrorBoundary>
-  </StrictMode>,
+  <ErrorBoundary>
+    <App />
+  </ErrorBoundary>
 )
