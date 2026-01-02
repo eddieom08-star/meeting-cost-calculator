@@ -71,19 +71,18 @@ export const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose }) => 
     }
   };
 
-  if (!isOpen) return null;
-
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          onClick={(e) => e.stopPropagation()}
-          className="w-full max-w-md"
-        >
-          <Card>
+      {isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            onClick={(e) => e.stopPropagation()}
+            className="w-full max-w-md"
+          >
+            <Card>
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-xl font-bold text-white">Export History</h2>
               <button
@@ -143,9 +142,10 @@ export const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose }) => 
                 {copied ? 'Copied!' : 'Copy'}
               </Button>
             </div>
-          </Card>
-        </motion.div>
-      </div>
+            </Card>
+          </motion.div>
+        </div>
+      )}
     </AnimatePresence>
   );
 };
