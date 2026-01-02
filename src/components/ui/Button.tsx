@@ -14,7 +14,7 @@ interface ButtonProps extends Omit<HTMLMotionProps<'button'>, 'size'> {
 }
 
 const variants: Record<ButtonVariant, string> = {
-  primary: 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-600/25',
+  primary: 'bg-gradient-to-r from-emerald-500/70 to-green-400/70 hover:from-emerald-500/85 hover:to-green-400/85 text-white shadow-lg shadow-emerald-500/30 backdrop-blur-sm border border-emerald-400/20',
   secondary: 'bg-slate-700 hover:bg-slate-600 text-white',
   ghost: 'bg-transparent hover:bg-slate-800 text-slate-300',
   danger: 'bg-red-600 hover:bg-red-700 text-white',
@@ -46,7 +46,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         className={cn(
           'inline-flex items-center justify-center font-medium rounded-lg',
           'transition-colors duration-150 ease-out',
-          'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-slate-900',
+          'focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-slate-900',
           'disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none',
           variants[variant],
           sizes[size],
